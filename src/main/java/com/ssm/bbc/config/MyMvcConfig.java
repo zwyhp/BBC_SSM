@@ -2,6 +2,8 @@ package com.ssm.bbc.config;
 
 import com.github.pagehelper.PageInterceptor;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.ssm.bbc.user.Interceptor.AdminInterceptor;
+import com.ssm.bbc.user.Interceptor.MessageInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -14,14 +16,12 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.ssm.bbc.user.Interceptor.LoginInterceptor;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -73,14 +73,16 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /*配置拦截器*/
-    /*@Override
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         // 映射为 user 的控制器下的所有映射
-        registry.addInterceptor().addPathPatterns("/admin/*").excludePathPatterns("/index", "/");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/register","/tourist/*");
+        registry.addInterceptor(new MessageInterceptor()).addPathPatterns("/owner/**");
+        registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/admin/**");
         super.addInterceptors(registry);
-    }*/
+    }
 
     /*配置文件上传*/
     @Bean

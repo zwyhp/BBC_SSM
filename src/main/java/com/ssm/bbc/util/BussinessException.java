@@ -9,3 +9,4 @@ public class BussinessException extends RuntimeException  {
         super(message);
     }
 }
+

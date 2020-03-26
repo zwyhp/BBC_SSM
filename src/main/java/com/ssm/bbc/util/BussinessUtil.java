@@ -21,6 +21,8 @@ public class BussinessUtil {
     public static final String CLICK_FAILED = "验证失败";
     public static final String TOP_FAILED = "置顶失败";
 
+    public static final String PWD_ERROR = "置顶失败";
+
     private BussinessUtil() { throw new IllegalStateException("Utility class"); }
 
     public static void isNull(Object object, String error){
@@ -43,4 +45,9 @@ public class BussinessUtil {
             throw new BussinessException("当前页码超出总页数");
         }
     }
+
+    public static void pleaseLogin(String error){
+        throw new LoginException(error);
+    }
+
 }

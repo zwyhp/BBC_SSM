@@ -5,6 +5,7 @@ import com.ssm.bbc.messcategory.service.IMessCategoryService;
 import com.ssm.bbc.util.BussinessUtil;
 import com.ssm.bbc.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,13 +24,13 @@ public class MessCategoryController {
     }
 
     @PostMapping("/category")
-    public Object addCategory(@RequestBody TmessCategory TmessCategory){
+    public Object addCategory(@RequestBody @Validated TmessCategory TmessCategory){
         int i = messCategoryService.addMessCategory(TmessCategory);
         return i>0? ResponseUtil.ok() : ResponseUtil.badArgument(BussinessUtil.ADD_FAILED);
     }
 
     @PutMapping("/category")
-    public Object updateCategory(@RequestBody TmessCategory TmessCategory){
+    public Object updateCategory(@RequestBody @Validated TmessCategory TmessCategory){
         int i = messCategoryService.updateMessCategory(TmessCategory);
         return i>0? ResponseUtil.ok() : ResponseUtil.badArgument(BussinessUtil.UPDATE_FAILED);
     }

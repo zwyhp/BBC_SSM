@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.bbc.message.dao.TmessageMapper">
+    <insert id="addTmessage" parameterType="com.ssm.bbc.message.domain.Tmessage">
+        insert  into Tmessage values(default,#{guestName},#{messageContent},#{messageTime},#{reply},#{isPass},#{messKind},#{messageTitle},#{clickNumber},#{isTop},#{lastCommentTime})
+    </insert>
+
+    <delete id="deleteTmessageById" parameterType="int">
+        delete from Tmessage where messageId = #{messageId}
+    </delete>
+
+    <update id="updateTmessageById" parameterType="com.ssm.bbc.message.domain.Tmessage">
+        update Tmessage set guestName = #{guestName},messageContent = #{messageContent},
+        messageTime = #{messageTime},reply = #{reply},isPass = #{isPass},
+        messKind = #{messKind},messageTitle = #{messageTitle},clickNumber = #{clickNumber},
+        isTop = #{isTop},lastCommentTime = #{lastCommentTime} where messageId = #{messageId}
+    </update>
+
+    <update id="checkMessage" parameterType="int">
+        update Tmessage set isPass = 1 where MessageId = #{messageId}
+    </update>
+
+    <update id="stickMessage" parameterType="int">
+        update Tmessage set isTop = 1 where MessageId = #{messageId}
+    </update>
+    <update id="cancelStickMessage" parameterType="int">
+        update Tmessage set isTop = 0 where MessageId = #{messageId}
+    </update>
+    <update id="addClickNumber" parameterType="int">
+        update Tmessage set ClickNumber = ClickNumber + 1 where MessageId = #{messageId}
+    </update>
+
+    <select id="queryTmessageByPage" resultType="com.ssm.bbc.message.domain.Tmessage">
+        select * from Tmessage
+    </select>
+    <select id="queryNotPassMessageByPage" resultType="com.ssm.bbc.message.domain.Tmessage">
+        select * from Tmessage where Ispass = 0
+    </select>
+
+    <select id="queryTmessageById" parameterType="int" resultType="com.ssm.bbc.message.domain.Tmessage">
+        select * from Tmessage where messageId = #{tmessageId}
+    </select>
+
+</mapper>

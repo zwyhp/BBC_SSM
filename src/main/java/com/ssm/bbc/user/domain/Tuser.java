@@ -1,12 +1,20 @@
 package com.ssm.bbc.user.domain;
 
+import javax.validation.constraints.NotEmpty;
+import com.ssm.bbc.util.parameterverify.VerifyError;
+
 public class Tuser {
     private int userID;
+    @NotEmpty(message = VerifyError.USER_NAME_NOT_NULL)
     private String userName;
+    @NotEmpty(message = VerifyError.USER_PWD_NOT_NULL)
     private String userPwd;
+    @NotEmpty(message = VerifyError.EMAIl_NOT_NULL)
     private String userEmail;
     private int inBlack;  //默认为0   1为加入黑名单
+    @NotEmpty(message = VerifyError.QUESTION_NOT_NULL)
     private String question;
+    @NotEmpty(message = VerifyError.ANSWER_NOT_NULL)
     private String answer;
     private int isOwner; //默认为0   1为版主, 可以有一个为2的作为内置管理员
 

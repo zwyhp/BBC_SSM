@@ -1,11 +1,18 @@
 package com.ssm.bbc.message.domain;
 
+import com.ssm.bbc.util.parameterverify.VerifyError;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class Tcomment {
     private int commentId;
+    @NotEmpty
+    @NotEmpty(message = VerifyError.COMMENT_NOT_NULL)
     private String commentContent;
     private LocalDateTime commentTime;
+    @NotNull(message = VerifyError.MESS_ID_NOT_NULL)
     private int messageId;
     private String commentUser;
 

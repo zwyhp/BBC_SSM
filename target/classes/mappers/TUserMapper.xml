@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.bbc.user.dao.TUserMapper">
+
+    <insert id="addTUser" parameterType="com.ssm.bbc.user.domain.Tuser">
+        insert  into TUser values(default,#{userName},#{userPwd},#{userEmail},#{inBlack},#{question},#{answer},#{isOwner})
+    </insert>
+
+    <delete id="deleteTuserById" parameterType="int">
+        delete from Tuser where UserID = #{userId}
+    </delete>
+
+    <update id="inBlackTuserById" parameterType="int">
+        update Tuser set inBlack = 1 where UserId = #{userId}
+    </update>
+
+    <update id="inOwnerTuserById" parameterType="int">
+        update Tuser set IsOwner = 1 where UserId = #{userId}
+    </update>
+    <update id="outBlackTuserById" parameterType="int">
+        update Tuser set inBlack = 0 where UserId = #{userId}
+    </update>
+
+    <update id="outOwnerTuserById" parameterType="int">
+        update Tuser set IsOwner = 0 where UserId = #{userId}
+    </update>
+
+
+    <update id="updateTuserById" parameterType="com.ssm.bbc.user.domain.Tuser">
+        update Tuser set UserName = #{UserName},UserPwd = #{Userpwd},UserEmail = #{UserEmail} where UserId = #{id}
+    </update>
+
+    <select id="queryTuserByName" parameterType="String" resultType="com.ssm.bbc.user.domain.Tuser">
+        select * from Tuser where UserName = #{name}
+    </select>
+    <select id="queryTuserByEmail" parameterType="String" resultType="com.ssm.bbc.user.domain.Tuser">
+        select * from Tuser where Useremail = #{email}
+    </select>
+
+    <select id="queryTuserByID" parameterType="int" resultType="com.ssm.bbc.user.domain.Tuser">
+        select * from Tuser where UserId = #{userId}
+    </select>
+
+    <select id="queryTUserByPage" resultType="com.ssm.bbc.user.domain.Tuser">
+        select * from Tuser
+    </select>
+
+</mapper>

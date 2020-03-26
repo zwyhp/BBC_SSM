@@ -1,15 +1,21 @@
 package com.ssm.bbc.message.domain;
 
+import com.ssm.bbc.util.parameterverify.VerifyError;
+
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 public class Tmessage {
     private int messageId;
     private String guestName;
+    @NotEmpty(message = VerifyError.MESS_CONTENT_NOT_NULL)
     private String messageContent;
     private LocalDateTime messageTime;
     private String reply;
     private int isPass;
+    @NotEmpty(message = VerifyError.MESS_KIND_OWNER_NOT_NULL)
     private String messKind;
+    @NotEmpty(message = VerifyError.MESS_TITLE_NOT_NULL)
     private String messageTitle;
     private int clickNumber;
     private int isTop;
