@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.bbc.messcategory.dao.TMessCategoryMapper">
+
+    <insert id="addTMessCategory" parameterType="com.ssm.bbc.messcategory.domain.TmessCategory">
+        insert  into TmessCategory values(default,#{category},#{categoryOwner})
+    </insert>
+
+    <delete id="deleteTMessCategoryById" parameterType="int">
+        delete from TmessCategory where categoryId = #{categoryId}
+    </delete>
+
+    <update id="updateTMessCategoryById" parameterType="com.ssm.bbc.messcategory.domain.TmessCategory">
+        update TmessCategory set category = #{category},categoryOwner=#{categoryOwner} where categoryId = #{categoryId}
+    </update>
+
+    <select id="queryTMessCategoryById" parameterType="int" resultType="com.ssm.bbc.messcategory.domain.TmessCategory">
+        select * from TmessCategory where categoryId = #{categoryId}
+    </select>
+
+    <select id="queryTMessCategoryByPage" resultType="com.ssm.bbc.messcategory.domain.TmessCategory">
+        select * from TmessCategory
+    </select>
+
+    <select id="queryTMessCategoryByName" parameterType="String" resultType="com.ssm.bbc.messcategory.domain.TmessCategory">
+        select * from TmessCategory where category like #{category}
+    </select>
+
+    <select id="queryTMessCategoryByOwner" parameterType="String" resultType="com.ssm.bbc.messcategory.domain.TmessCategory">
+        select * from TmessCategory where categoryOwner = #{owner}
+    </select>
+
+</mapper>
