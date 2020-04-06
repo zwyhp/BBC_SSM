@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -55,12 +58,26 @@ public class MessageService implements ImessageService {
 
     @Override
     public int checkMessage(int messageId) {
-        return tmessageMapper.checkMessage(messageId);
+        Tmessage tmessage = tmessageMapper.queryTmessageById(messageId);
+        if (tmessage.getIsPass()==0) {
+            return tmessageMapper.checkMessage(messageId);
+        } else{
+            return tmessageMapper.cancelCheckMessage(messageId);
+        }
+
     }
 
+    /**
+     * 置顶之前需要    这个帖子 审核通过
+     * @param messageId
+     * @return
+     */
     @Override
     public int stickMessage(int messageId) {
         Tmessage tmessage = tmessageMapper.queryTmessageById(messageId);
+        if (tmessage.getIsPass() == 0){
+            BussinessUtil.error("置顶失败，帖子没有审核");
+        }
         if (tmessage.getIsTop()==0) {
             return tmessageMapper.stickMessage(messageId);
         } else{
@@ -70,17 +87,35 @@ public class MessageService implements ImessageService {
 
 
     @Override
-    public List<Tmessage> queryMessageByPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return tmessageMapper.queryTmessageByPage();
+    public List<Tmessage> queryMessageTop10(String plate) {
+        PageHelper.startPage(1, 10);
+        return tmessageMapper.queryTmessageTop10(plate);
     }
 
     @Override
-    public List<Tmessage> queryNotPassMessageByPage(int pageNum, int pageSize) {
+    public List<Tmessage> queryMessageByPage(int pageNum, int pageSize,String query,String plate) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("query",query);
+        map.put("plate", plate);
         PageHelper.startPage(pageNum, pageSize);
-        return tmessageMapper.queryNotPassMessageByPage();
+        return tmessageMapper.queryTmessageByPage(map);
     }
 
+    @Override
+    public List<Tmessage> queryNotPassMessageByPage(int pageNum, int pageSize, String query , String plate) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("query",query);
+        map.put("plate", plate);
+        PageHelper.startPage(pageNum, pageSize);
+        return tmessageMapper.queryNotPassMessageByPage(map);
+    }
+
+    /**
+     * 这样写  会导致  一个人可以刷查看次数  （没考虑好）
+     * 没过审的不能增加   ！  做判断
+     * @param messageId
+     * @return
+     */
     @Override
     public Tmessage queryMessageById(int messageId) {
         Tmessage tmessage = tmessageMapper.queryTmessageById(messageId);

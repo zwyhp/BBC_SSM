@@ -41,8 +41,13 @@
         select * from Tuser where UserId = #{userId}
     </select>
 
-    <select id="queryTUserByPage" resultType="com.ssm.bbc.user.domain.Tuser">
+    <select id="queryTUserByPage" parameterType="String" resultType="com.ssm.bbc.user.domain.Tuser">
         select * from Tuser
+    <where>
+        <if test="query != null and query != ''">
+            Username  like concat("%",#{query},"%")
+        </if>
+    </where>
     </select>
 
 </mapper>

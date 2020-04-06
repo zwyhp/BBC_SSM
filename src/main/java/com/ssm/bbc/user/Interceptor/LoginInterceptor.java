@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class LoginInterceptor implements HandlerInterceptor {
-    private final static Logger logger = LoggerFactory.getLogger(LogAspect.class);
+    private final static Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
     //在Controller处理之前调用, 返回false时整个请求结束   拦截请求
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {

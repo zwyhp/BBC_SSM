@@ -1,5 +1,7 @@
 package com.ssm.bbc.user.controller;
 
+import com.ssm.bbc.messcategory.domain.TmessCategory;
+import com.ssm.bbc.messcategory.service.IMessCategoryService;
 import com.ssm.bbc.user.domain.Tuser;
 import com.ssm.bbc.user.service.ItuserService;
 import com.ssm.bbc.util.BussinessUtil;
@@ -10,11 +12,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class UserController {
     @Autowired
     private ItuserService ituserService;
+    @Autowired
+    private IMessCategoryService messCategoryService;
 
     /**
      * 对密码和安全问题答案   进行 md5加密后在进行注册
@@ -29,23 +35,52 @@ public class UserController {
         return i>0? ResponseUtil.ok() : ResponseUtil.afterError(BussinessUtil.ADD_FAILED);
     }
 
-    @PostMapping("/login")
-    public Object login(@RequestParam(value = "username",required = true) String username,
-                        @RequestParam(value = "password",required = true) String password,
+    @PostMapping(value = "/login")
+    public Object login(@RequestBody Map<String,String> map,
                         HttpServletRequest request){
+        String username = map.get("username");
+        String password = map.get("password");
         Tuser userByName = ituserService.queryTuserByName(username);
+        if (userByName == null){
+            return ResponseUtil.unsupport(BussinessUtil.USER_NOT_EXIST);
+        }
         String pwd = MD5hexUtil.getMd5hex(username,password);
         if(userByName.getUserPwd().equals(pwd)){
             request.getSession().setAttribute("user",userByName);
-            return ResponseUtil.ok();
+            Map<Object, Object> result = new HashMap<Object, Object>();
+            result.put("token", request.getSession().getId());
+            result.put("user", userByName);
+            if (userByName.getIsOwner() == 1){
+                TmessCategory tmessCategory = messCategoryService.queryMessCategoryByOwner(username);
+                result.put("role",tmessCategory.getCategory());
+                request.getSession().setAttribute("role",tmessCategory.getCategory());
+            }else if (userByName.getIsOwner() == 2){
+                result.put("role","*");
+            }
+            return ResponseUtil.ok(result);
         }else {
-            return ResponseUtil.badArgument(BussinessUtil.PWD_ERROR);
+            return ResponseUtil.unsupport(BussinessUtil.PWD_ERROR);
         }
+    }
+
+    @GetMapping("/info")
+    public Object info(@RequestParam(value = "token", required = false) String id,HttpServletRequest request){
+            Map<Object, Object> result = new HashMap<Object, Object>();
+            Tuser user = (Tuser)request.getSession().getAttribute("user");
+            if (user!=null){
+                result.put("name",user.getUserName());
+                result.put("role",user.getIsOwner());
+            }else {
+                result.put("name","游客" + request.getRemoteAddr() );
+            }
+            return ResponseUtil.ok(result);
     }
 
     @GetMapping("/logout")
     public Object logout(HttpServletRequest request){
         request.getSession().removeAttribute("user");
+        request.getSession().removeAttribute("role");
+        request.getSession().removeAttribute("name");
         return ResponseUtil.ok();
     }
 

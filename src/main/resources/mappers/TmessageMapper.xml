@@ -19,6 +19,9 @@
     <update id="checkMessage" parameterType="int">
         update Tmessage set isPass = 1 where MessageId = #{messageId}
     </update>
+    <update id="cancelCheckMessage" parameterType="int">
+        update Tmessage set isPass = 0 where MessageId = #{messageId}
+    </update>
 
     <update id="stickMessage" parameterType="int">
         update Tmessage set isTop = 1 where MessageId = #{messageId}
@@ -30,11 +33,40 @@
         update Tmessage set ClickNumber = ClickNumber + 1 where MessageId = #{messageId}
     </update>
 
-    <select id="queryTmessageByPage" resultType="com.ssm.bbc.message.domain.Tmessage">
+    <select id="queryTmessageByPage" parameterType="java.util.Map" resultType="com.ssm.bbc.message.domain.Tmessage">
         select * from Tmessage
+        <where>
+            <if test="query != null and query != ''">
+                AND   MessageTitle  like concat("%",#{query},"%")
+            </if>
+            <if test="plate != null and plate != ''">
+                AND   MessKind  = #{plate}
+            </if>
+        </where>
+        order by istop desc, MessageTime desc
     </select>
-    <select id="queryNotPassMessageByPage" resultType="com.ssm.bbc.message.domain.Tmessage">
-        select * from Tmessage where Ispass = 0
+
+    <select id="queryTmessageTop10" parameterType="String" resultType="com.ssm.bbc.message.domain.Tmessage">
+        select * from Tmessage
+        <where>
+            <if test="query != null and query != ''">
+                AND   MessKind  = #{query}
+            </if>
+        </where>
+        order by ClickNumber desc
+    </select>
+
+    <select id="queryNotPassMessageByPage"  parameterType="java.util.Map" resultType="com.ssm.bbc.message.domain.Tmessage">
+        select * from Tmessage as t
+        <where>
+            <if test="query != null and query != ''">
+              AND   MessageTitle  like concat("%",#{query},"%")
+            </if>
+            <if test="plate != null and plate != ''">
+                AND   MessKind  = #{plate}
+            </if>
+        </where>
+            order by (CASE t.IsPass WHEN 0 THEN 10 WHEN 1 THEN 20 ELSE 30 END) ASC,  t.MessageTime  desc
     </select>
 
     <select id="queryTmessageById" parameterType="int" resultType="com.ssm.bbc.message.domain.Tmessage">

@@ -1,9 +1,7 @@
 package com.ssm.bbc.message.controller;
 
 import com.ssm.bbc.message.domain.Tcomment;
-import com.ssm.bbc.message.domain.Tmessage;
 import com.ssm.bbc.message.service.ImessageService;
-import com.ssm.bbc.messcategory.service.IMessCategoryService;
 import com.ssm.bbc.user.domain.Tuser;
 import com.ssm.bbc.util.BussinessUtil;
 import com.ssm.bbc.util.ResponseUtil;
@@ -29,7 +27,7 @@ public class CommentController {
                              HttpServletRequest request){
         Tuser user = (Tuser) request.getSession().getAttribute("user");
         if (user!=null){
-        tcomment.setCommentUser(user.getUserName());
+            tcomment.setCommentUser(user.getUserName());
         }else {
             tcomment.setCommentUser("游客"+request.getRemoteAddr());
         }
@@ -37,18 +35,14 @@ public class CommentController {
         return i>0? ResponseUtil.ok():ResponseUtil.afterError(BussinessUtil.ADD_FAILED);
     }
 
-    @GetMapping("/message")
-    public Object getMessage(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
-        List<Tmessage> tmessages = imessageService.queryMessageByPage(pageNum, pageSize);
-        return ResponseUtil.ok(tmessages);
-    }
+
 
     @GetMapping("/comment")
     public Object getComment(@RequestParam(value = "messageId",required = true) int messageId,
             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
         List<Tcomment> tcomments = imessageService.queryCommentByPage(pageNum, pageSize, messageId);
-        return ResponseUtil.ok(tcomments);
+        return ResponseUtil.okList(tcomments);
     }
+
 }

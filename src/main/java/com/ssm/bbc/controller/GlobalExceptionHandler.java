@@ -3,10 +3,10 @@ package com.ssm.bbc.controller;
 
 
 import com.ssm.bbc.util.BussinessException;
+import com.ssm.bbc.util.LoginException;
 import com.ssm.bbc.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,11 +14,9 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 
-
-//@ControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -50,18 +48,23 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)   //返回一个指定的http response状态码
     @ResponseBody
     public Object notFount(MissingServletRequestParameterException e) {
         log.error("输入参数错误:", e);
         return ResponseUtil.badArgument("输入参数错误");
     }
 
+    @ExceptionHandler(LoginException.class)
+    @ResponseBody
+    public Object notFount(LoginException e) {
+        log.error("登录错误:", e);
+        return ResponseUtil.badArgument(e.getMessage());
+    }
+
     /**
      * 拦截业务异常
      */
     @ExceptionHandler(BussinessException.class)   //此处为自定义业务异常类
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)   //返回一个指定的http response状态码
     @ResponseBody
     public Object notFount(BussinessException e) {
         log.error("业务异常:", e);
@@ -74,7 +77,7 @@ public class GlobalExceptionHandler {
     public Object handleException(Exception e){
         System.out.println(e.getMessage());
         log.error(e.getMessage());
-        return ResponseUtil.unsupport();
+        return ResponseUtil.fail(-1,e.getMessage());
     }
 
 

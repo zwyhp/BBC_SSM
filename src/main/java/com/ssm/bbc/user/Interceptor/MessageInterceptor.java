@@ -12,14 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class MessageInterceptor implements HandlerInterceptor {
-    private final static Logger logger = LoggerFactory.getLogger(LogAspect.class);
+    private final static Logger logger = LoggerFactory.getLogger(MessageInterceptor.class);
     //在Controller处理之前调用, 返回false时整个请求结束   拦截请求
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String requestURI = request.getRequestURI();
         Tuser admin = (Tuser)request.getSession().getAttribute("user");
         logger.info("链接"+requestURI+"进入拦截器");
-        if(admin!=null && admin.getIsOwner() == 1) {
+        if(admin!=null && admin.getIsOwner() == 1 ) {
+            return true;
+        }
+        if(admin!=null && admin.getIsOwner() == 2 ) {
             return true;
         }
         BussinessUtil.pleaseLogin("权限不足,请重新登录");

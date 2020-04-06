@@ -13,9 +13,10 @@ public interface ImessageService {
 
     int checkMessage(int messageId);
     int stickMessage(int messageId);
-    List<Tmessage> queryMessageByPage(int pageNum,int pageSize);
+    List<Tmessage> queryMessageTop10(String plate);
+    List<Tmessage> queryMessageByPage(int pageNum,int pageSize,String query,String plate);
 
-    List<Tmessage> queryNotPassMessageByPage(int pageNum,int pageSize);
+    List<Tmessage> queryNotPassMessageByPage(int pageNum, int pageSize, String query , String plate);
 
     Tmessage queryMessageById(int messageId);
 

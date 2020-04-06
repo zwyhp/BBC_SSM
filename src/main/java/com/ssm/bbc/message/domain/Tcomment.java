@@ -1,5 +1,6 @@
 package com.ssm.bbc.message.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssm.bbc.util.parameterverify.VerifyError;
 
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +12,7 @@ public class Tcomment {
     @NotEmpty
     @NotEmpty(message = VerifyError.COMMENT_NOT_NULL)
     private String commentContent;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime commentTime;
     @NotNull(message = VerifyError.MESS_ID_NOT_NULL)
     private int messageId;

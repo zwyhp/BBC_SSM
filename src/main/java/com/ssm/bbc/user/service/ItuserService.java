@@ -3,7 +3,6 @@ package com.ssm.bbc.user.service;
 import com.ssm.bbc.user.domain.Tuser;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ItuserService {
     int addTuser(Tuser user);
@@ -13,5 +12,5 @@ public interface ItuserService {
     int deleteTuserById(int userId);
     Tuser queryTuserByName(String name);
     Tuser queryTuserByID(int userId);
-    List<Tuser> queryTUserByPage(int pageNum,int pageSize);
+    List<Tuser> queryTUserByPage(int pageNum, int pageSize, String query);
 }

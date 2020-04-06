@@ -16,10 +16,11 @@ public class AdminController {
     private ItuserService ituserService;
 
     @GetMapping("/users")
-    public Object users(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
-        List<Tuser> tusers = ituserService.queryTUserByPage(pageNum, pageSize);
-        return tusers;
+    public Object users(@RequestParam(value = "query", required = false) String query,
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
+        List<Tuser> tusers = ituserService.queryTUserByPage(pageNum, pageSize,query);
+        return ResponseUtil.okList(tusers);
     }
 
     @PutMapping("/updateBlack/{id}")

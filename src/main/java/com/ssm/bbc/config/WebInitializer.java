@@ -1,5 +1,6 @@
 package com.ssm.bbc.config;
 
+import com.ssm.bbc.filter.CORSFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -22,7 +23,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     }
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{ new HiddenHttpMethodFilter()};
+        return new Filter[]{ new HiddenHttpMethodFilter() ,new CORSFilter()};
     }
 
 

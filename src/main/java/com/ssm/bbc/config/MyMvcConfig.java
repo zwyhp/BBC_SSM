@@ -10,6 +10,7 @@ import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -22,7 +23,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.ssm.bbc.user.Interceptor.LoginInterceptor;
-
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
@@ -32,12 +32,13 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
+@EnableAspectJAutoProxy
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setPrefix("/WEB-INF/view/system");
         viewResolver.setSuffix(".jsp");
         viewResolver.setViewClass(JstlView.class);
         return viewResolver;
@@ -45,16 +46,8 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
     /*静态资源拦截*/
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/static/");
     }
-
-
-    /*配置cors跨域问题*/
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
-
 
     /*地区拦截器*/
     @Bean
@@ -78,7 +71,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         // 映射为 user 的控制器下的所有映射
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/register","/tourist/*");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/register","/tourist/**","/info","/logout");
         registry.addInterceptor(new MessageInterceptor()).addPathPatterns("/owner/**");
         registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/admin/**");
         super.addInterceptors(registry);

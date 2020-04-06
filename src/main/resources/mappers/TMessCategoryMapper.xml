@@ -18,8 +18,13 @@
         select * from TmessCategory where categoryId = #{categoryId}
     </select>
 
-    <select id="queryTMessCategoryByPage" resultType="com.ssm.bbc.messcategory.domain.TmessCategory">
+    <select id="queryTMessCategoryByPage" parameterType="String" resultType="com.ssm.bbc.messcategory.domain.TmessCategory">
         select * from TmessCategory
+    <where>
+        <if test="query != null and query != ''">
+            Category  like concat("%",#{query},"%")
+        </if>
+    </where>
     </select>
 
     <select id="queryTMessCategoryByName" parameterType="String" resultType="com.ssm.bbc.messcategory.domain.TmessCategory">

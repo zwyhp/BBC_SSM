@@ -21,7 +21,7 @@ public class BussinessUtil {
     public static final String CLICK_FAILED = "验证失败";
     public static final String TOP_FAILED = "置顶失败";
 
-    public static final String PWD_ERROR = "置顶失败";
+    public static final String PWD_ERROR = "登录失败";
 
     private BussinessUtil() { throw new IllegalStateException("Utility class"); }
 

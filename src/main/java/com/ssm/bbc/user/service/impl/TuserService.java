@@ -1,5 +1,6 @@
 package com.ssm.bbc.user.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ssm.bbc.user.dao.TUserMapper;
 import com.ssm.bbc.user.domain.Tuser;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -75,9 +75,9 @@ public class TuserService implements ItuserService {
     }
 
     @Override
-    public List<Tuser> queryTUserByPage(int pageNum,int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<Tuser> users = tUserMapper.queryTUserByPage();
+    public List<Tuser> queryTUserByPage(int pageNum, int pageSize, String query) {
+        Page<Object> objects = PageHelper.startPage(pageNum, pageSize);
+        List<Tuser> users = tUserMapper.queryTUserByPage(query);
         return users;
     }
 }

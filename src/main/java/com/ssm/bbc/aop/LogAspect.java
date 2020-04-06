@@ -23,8 +23,8 @@ import java.util.Date;
  * 日志切面类
  *
  */
-@Aspect
-@Component
+/*@Aspect
+@Component*/
 public class LogAspect {
     private final static Logger logger = LoggerFactory.getLogger(LogAspect.class);
     //设置切入点：这里直接拦截被@RestController注解的类

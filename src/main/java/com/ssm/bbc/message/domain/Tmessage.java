@@ -1,5 +1,6 @@
 package com.ssm.bbc.message.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssm.bbc.util.parameterverify.VerifyError;
 
 import javax.validation.constraints.NotEmpty;
@@ -10,6 +11,7 @@ public class Tmessage {
     private String guestName;
     @NotEmpty(message = VerifyError.MESS_CONTENT_NOT_NULL)
     private String messageContent;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime messageTime;
     private String reply;
     private int isPass;
@@ -19,6 +21,7 @@ public class Tmessage {
     private String messageTitle;
     private int clickNumber;
     private int isTop;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastCommentTime;
 
     public Tmessage() {
