@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import com.ssm.bbc.util.parameterverify.VerifyError;
 
 public class Tuser {
-    private int userID;
+    private int userId;
     @NotEmpty(message = VerifyError.USER_NAME_NOT_NULL)
     private String userName;
     @NotEmpty(message = VerifyError.USER_PWD_NOT_NULL)
@@ -32,8 +32,8 @@ public class Tuser {
     }
 
 
-    public int getUserID() {
-        return userID;
+    public int getUserId() {
+        return userId;
     }
 
     public String getUserName() {

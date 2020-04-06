@@ -26,8 +26,8 @@
     </update>
 
 
-    <update id="updateTuserById" parameterType="com.ssm.bbc.user.domain.Tuser">
-        update Tuser set UserName = #{UserName},UserPwd = #{Userpwd},UserEmail = #{UserEmail} where UserId = #{id}
+    <update id="updateTuser" parameterType="com.ssm.bbc.user.domain.Tuser">
+        update Tuser set userName = #{userName},userPwd = #{userPwd},userEmail = #{userEmail} where userId = #{userId}
     </update>
 
     <select id="queryTuserByName" parameterType="String" resultType="com.ssm.bbc.user.domain.Tuser">

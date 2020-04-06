@@ -15,7 +15,7 @@ public interface TUserMapper {
     int deleteTuserById(int userId);
     List<Tuser> queryTUserByPage(@Param(value="query")String query);
     int addTUser(Tuser user);
-    int updateTuserById(Tuser user);
+    int updateTuser(Tuser user);
     Tuser queryTuserByName(String name);
     Tuser queryTuserByEmail(String email);
     Tuser queryTuserByID(int userId);

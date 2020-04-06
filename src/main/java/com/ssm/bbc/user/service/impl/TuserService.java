@@ -32,8 +32,9 @@ public class TuserService implements ItuserService {
 
     @Override
     public int updateTuser(Tuser user) {
-
-        return 0;
+        Tuser tuser = queryTuserByName(user.getUserName());
+        tuser.setUserPwd(user.getUserPwd());
+        return tUserMapper.updateTuser(tuser);
     }
 
     @Override
@@ -66,6 +67,7 @@ public class TuserService implements ItuserService {
     @Override
     public Tuser queryTuserByName(String name) {
         Tuser userByName = tUserMapper.queryTuserByName(name);
+        BussinessUtil.isNull(userByName,BussinessUtil.USER_NOT_EXIST);
         return userByName;
     }
 

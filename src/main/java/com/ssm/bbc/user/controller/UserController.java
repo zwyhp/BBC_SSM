@@ -35,6 +35,25 @@ public class UserController {
         return i>0? ResponseUtil.ok() : ResponseUtil.afterError(BussinessUtil.ADD_FAILED);
     }
 
+    @GetMapping("/question")
+    public Object question(@RequestParam(value = "userName") String userName){
+        Tuser userByName = ituserService.queryTuserByName(userName);
+        return ResponseUtil.ok(userByName.getQuestion());
+    }
+
+    @PutMapping("/update")
+    public Object updatePwd(@RequestBody Tuser user){
+        int i = 0;
+        String answer = MD5hexUtil.getMd5hex(user.getUserName(),user.getAnswer());
+        Tuser userByName = ituserService.queryTuserByName(user.getUserName());
+        if (!userByName.getAnswer().equals(answer)){
+          return ResponseUtil.afterError(BussinessUtil.ANSWER_FAILED);
+        }
+        user.setUserPwd(MD5hexUtil.getMd5hex(user.getUserName(),user.getUserPwd()));
+        i = ituserService.updateTuser(user);
+        return i>0? ResponseUtil.ok() : ResponseUtil.afterError(BussinessUtil.UPDATE_FAILED);
+    }
+
     @PostMapping(value = "/login")
     public Object login(@RequestBody Map<String,String> map,
                         HttpServletRequest request){
@@ -69,7 +88,9 @@ public class UserController {
             Tuser user = (Tuser)request.getSession().getAttribute("user");
             if (user!=null){
                 result.put("name",user.getUserName());
-                result.put("role",user.getIsOwner());
+                if (user.getInBlack() != 1) {
+                    result.put("role", user.getIsOwner());
+                }
             }else {
                 result.put("name","游客" + request.getRemoteAddr() );
             }

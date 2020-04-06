@@ -13,6 +13,7 @@ public class BussinessUtil {
     public static final String EMAIL_REPETITION = "邮箱已经被注册";
 
     public static final String UPDATE_FAILED = "修改失败";
+    public static final String ANSWER_FAILED = "安全问题答案错误";
     public static final String DELETE_FAILED = "删除失败";
     public static final String ADD_FAILED = "添加失败";
 
@@ -22,6 +23,9 @@ public class BussinessUtil {
     public static final String TOP_FAILED = "置顶失败";
 
     public static final String PWD_ERROR = "登录失败";
+
+    public static final String USER_FREEZE = "你的账号被冻结，无法发帖";
+
 
     private BussinessUtil() { throw new IllegalStateException("Utility class"); }
 

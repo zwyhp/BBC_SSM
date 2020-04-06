@@ -30,7 +30,7 @@ public class MessCategoryService implements IMessCategoryService {
     public int addMessCategory(TmessCategory category) {
         verifyCategory(category,0);
         Tuser tuserByName = tUserMapper.queryTuserByName(category.getCategoryOwner());
-        tUserMapper.inOwnerTuserById(tuserByName.getUserID());
+        tUserMapper.inOwnerTuserById(tuserByName.getUserId());
         return tMessCategoryMapper.addTMessCategory(category);
     }
 
@@ -91,9 +91,9 @@ public class MessCategoryService implements IMessCategoryService {
     private void setCategoryOwner(TmessCategory category){
         TmessCategory tmessCategory = tMessCategoryMapper.queryTMessCategoryById(category.getCategoryId());
         Tuser oldUser = tUserMapper.queryTuserByName(tmessCategory.getCategoryOwner());
-        tUserMapper.outOwnerTuserById(oldUser.getUserID());
+        tUserMapper.outOwnerTuserById(oldUser.getUserId());
         Tuser newUser = tUserMapper.queryTuserByName(category.getCategoryOwner());
-        tUserMapper.inOwnerTuserById(newUser.getUserID());
+        tUserMapper.inOwnerTuserById(newUser.getUserId());
     }
 
 }

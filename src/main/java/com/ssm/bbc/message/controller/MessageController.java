@@ -42,6 +42,9 @@ public class MessageController {
     public Object addMessage(@RequestBody @Validated Tmessage tmessage,
                              HttpServletRequest request){
         Tuser user = (Tuser) request.getSession().getAttribute("user");
+        if (user.getInBlack() == 1){
+            ResponseUtil.badArgument(BussinessUtil.USER_FREEZE);
+        }
         tmessage.setGuestName(user.getUserName());
         int i = imessageService.addMessage(tmessage);
         return i>0? ResponseUtil.ok():ResponseUtil.afterError(BussinessUtil.ADD_FAILED);

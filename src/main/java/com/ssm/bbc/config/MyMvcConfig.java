@@ -71,7 +71,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         // 映射为 user 的控制器下的所有映射
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/register","/tourist/**","/info","/logout");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/register","/tourist/**","/info","/logout","/question","/update");
         registry.addInterceptor(new MessageInterceptor()).addPathPatterns("/owner/**");
         registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/admin/**");
         super.addInterceptors(registry);
