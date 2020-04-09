@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
         }else {
             msg = "系统繁忙，请稍后重试...";
         }
-       return ResponseUtil.badArgument(msg);
+       return ResponseUtil.parameterError(msg);
     }
 
 

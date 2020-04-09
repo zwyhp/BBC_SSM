@@ -82,6 +82,9 @@ public class ResponseUtil {
     public static Object badArgument(String error) {
         return fail(501, error);
     }
+    public static Object parameterError(String error) {
+        return fail(401, error);
+    }
     public static Object unlogin() {
         return fail(501, "请登录");
     }

@@ -2,15 +2,17 @@ package com.ssm.bbc.message.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssm.bbc.util.parameterverify.VerifyError;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class Tcomment {
     private int commentId;
-    @NotEmpty
     @NotEmpty(message = VerifyError.COMMENT_NOT_NULL)
+    @Size(min = 10,message = VerifyError.COMMENT_SIZE)
     private String commentContent;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime commentTime;

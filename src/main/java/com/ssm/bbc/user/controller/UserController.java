@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,12 +36,22 @@ public class UserController {
         return i>0? ResponseUtil.ok() : ResponseUtil.afterError(BussinessUtil.ADD_FAILED);
     }
 
+    /**
+     * 查看用户的安全问题 用于修改密码
+     * @param userName
+     * @return
+     */
     @GetMapping("/question")
     public Object question(@RequestParam(value = "userName") String userName){
         Tuser userByName = ituserService.queryTuserByName(userName);
         return ResponseUtil.ok(userByName.getQuestion());
     }
 
+    /**
+     * 验证安全问题   然后修改密码
+     * @param user
+     * @return
+     */
     @PutMapping("/update")
     public Object updatePwd(@RequestBody Tuser user){
         int i = 0;
@@ -82,6 +93,12 @@ public class UserController {
         }
     }
 
+    /**
+     * 获得用户信息     session与cookie 没有处理好
+     * @param id
+     * @param request
+     * @return
+     */
     @GetMapping("/info")
     public Object info(@RequestParam(value = "token", required = false) String id,HttpServletRequest request){
             Map<Object, Object> result = new HashMap<Object, Object>();

@@ -1,13 +1,17 @@
 package com.ssm.bbc.user.domain;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import com.ssm.bbc.util.parameterverify.VerifyError;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class Tuser {
     private int userId;
     @NotEmpty(message = VerifyError.USER_NAME_NOT_NULL)
+    @Size(min = 5 ,max = 20, message = VerifyError.USER_NAME_SIZE)
     private String userName;
     @NotEmpty(message = VerifyError.USER_PWD_NOT_NULL)
+    @Size(min = 6 ,max = 16, message = VerifyError.PWD_NAME_SIZE)
     private String userPwd;
     @NotEmpty(message = VerifyError.EMAIl_NOT_NULL)
     private String userEmail;

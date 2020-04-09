@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 管理员 对用户的操作
+ */
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

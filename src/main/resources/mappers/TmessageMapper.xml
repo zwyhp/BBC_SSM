@@ -36,6 +36,7 @@
     <select id="queryTmessageByPage" parameterType="java.util.Map" resultType="com.ssm.bbc.message.domain.Tmessage">
         select * from Tmessage
         <where>
+            Ispass = 1
             <if test="query != null and query != ''">
                 AND   MessageTitle  like concat("%",#{query},"%")
             </if>
@@ -49,6 +50,7 @@
     <select id="queryTmessageTop10" parameterType="String" resultType="com.ssm.bbc.message.domain.Tmessage">
         select * from Tmessage
         <where>
+            Ispass = 1
             <if test="query != null and query != ''">
                 AND   MessKind  = #{query}
             </if>

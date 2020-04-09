@@ -2,14 +2,16 @@ package com.ssm.bbc.message.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssm.bbc.util.parameterverify.VerifyError;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class Tmessage {
     private int messageId;
     private String guestName;
     @NotEmpty(message = VerifyError.MESS_CONTENT_NOT_NULL)
+    @Size(min = 20  , message = VerifyError.MESS_CONTENT_SIZE)
     private String messageContent;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime messageTime;
@@ -17,7 +19,9 @@ public class Tmessage {
     private int isPass;
     @NotEmpty(message = VerifyError.MESS_KIND_OWNER_NOT_NULL)
     private String messKind;
+
     @NotEmpty(message = VerifyError.MESS_TITLE_NOT_NULL)
+    @Size(min = 8 ,max = 30 , message = VerifyError.MESS_TITLE_SIZE)
     private String messageTitle;
     private int clickNumber;
     private int isTop;

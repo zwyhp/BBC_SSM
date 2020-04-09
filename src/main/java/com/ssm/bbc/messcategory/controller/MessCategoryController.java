@@ -30,7 +30,7 @@ public class MessCategoryController {
     }
 
     @PostMapping("/admin/addcategory")
-    public Object addCategory(@RequestBody  TmessCategory tcategory){
+    public Object addCategory(@RequestBody @Validated TmessCategory tcategory){
         int i = messCategoryService.addMessCategory(tcategory);
         return i>0? ResponseUtil.ok() : ResponseUtil.badArgument(BussinessUtil.ADD_FAILED);
     }

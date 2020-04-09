@@ -11,6 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 版主拦截器
+ */
 public class MessageInterceptor implements HandlerInterceptor {
     private final static Logger logger = LoggerFactory.getLogger(MessageInterceptor.class);
     //在Controller处理之前调用, 返回false时整个请求结束   拦截请求

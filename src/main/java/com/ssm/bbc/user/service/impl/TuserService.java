@@ -18,6 +18,11 @@ public class TuserService implements ItuserService {
     @Autowired
     private TUserMapper tUserMapper;
 
+    /**
+     * 用户名的  id  inblac  inowner为默认的
+     * @param user
+     * @return
+     */
     @Override
     public int addTuser(Tuser user) {
         Tuser userByName;
@@ -30,6 +35,11 @@ public class TuserService implements ItuserService {
         return tUserMapper.addTUser(user);
     }
 
+    /**
+     * 只允许修改密码
+     * @param user
+     * @return
+     */
     @Override
     public int updateTuser(Tuser user) {
         Tuser tuser = queryTuserByName(user.getUserName());
@@ -76,6 +86,13 @@ public class TuserService implements ItuserService {
         return tUserMapper.queryTuserByID(userId);
     }
 
+    /**
+     * 使用分页插件
+     * @param pageNum  当前页数
+     * @param pageSize 每页显示数量
+     * @param query  按名字查询
+     * @return
+     */
     @Override
     public List<Tuser> queryTUserByPage(int pageNum, int pageSize, String query) {
         Page<Object> objects = PageHelper.startPage(pageNum, pageSize);
