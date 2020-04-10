@@ -11,7 +11,7 @@ public class Tmessage {
     private int messageId;
     private String guestName;
     @NotEmpty(message = VerifyError.MESS_CONTENT_NOT_NULL)
-    @Size(min = 20  , message = VerifyError.MESS_CONTENT_SIZE)
+    @Size(min = 10  , message = VerifyError.MESS_CONTENT_SIZE)
     private String messageContent;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime messageTime;
@@ -21,7 +21,7 @@ public class Tmessage {
     private String messKind;
 
     @NotEmpty(message = VerifyError.MESS_TITLE_NOT_NULL)
-    @Size(min = 8 ,max = 30 , message = VerifyError.MESS_TITLE_SIZE)
+    @Size(min = 4 ,max = 15 , message = VerifyError.MESS_TITLE_SIZE)
     private String messageTitle;
     private int clickNumber;
     private int isTop;

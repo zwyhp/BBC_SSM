@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 public class TmessCategory {
     private int categoryId;
-    @Size(min = 4 ,max = 8, message = VerifyError.CATEGORY_NAME_SIZE)
+    @Size(min = 2 ,max = 4, message = VerifyError.CATEGORY_NAME_SIZE)
     @NotEmpty(message = VerifyError.CATEGORY_NOT_NULL)
     private String category;
     @NotEmpty(message = VerifyError.CATEGORY_OWNER_NOT_NULL)

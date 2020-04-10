@@ -15,7 +15,7 @@ public class VerifyError {
     public static final String PWD_NAME_SIZE = "密码长度必须为6-16";
 
     public static final String CATEGORY_NOT_NULL = "版块名不能为空";
-    public static final String CATEGORY_NAME_SIZE = "版块名长度必须在2-4字之间";
+    public static final String CATEGORY_NAME_SIZE = "版块名长度必须在2-4之间";
     public static final String CATEGORY_OWNER_NOT_NULL = "版主不能为空";
 
     public static final String MESS_CONTENT_NOT_NULL = "帖子内容不能为空";
@@ -27,5 +27,5 @@ public class VerifyError {
 
     public static final String COMMENT_NOT_NULL = "回复内容不能为空";
 
-    public static final String COMMENT_SIZE = "回复内容最少不低于5字";
+    public static final String COMMENT_SIZE = "回复内容最少不低于10字";
 }
